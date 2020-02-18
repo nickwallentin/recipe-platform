@@ -1,7 +1,12 @@
 import React, { Fragment, useState, useCallback } from "react"
 import Cropper from "react-easy-crop"
+import Slider from "@material-ui/core/slider"
 import axios from "axios"
 import styled from "styled-components"
+
+import UploadIcon from "../../assets/icons/upload-image.svg"
+
+import { Button } from "../styled"
 
 const UploadImage = ({ image, setImage }) => {
   const [imageSrc, setImageSrc] = useState()
@@ -83,7 +88,9 @@ const UploadImage = ({ image, setImage }) => {
             alt="Recipe image preview"
           />
         ) : (
-          <UploadImageContainer onClick={e => chooseImage(e)} />
+          <UploadImageContainer onClick={e => chooseImage(e)}>
+            <UploadIcon />
+          </UploadImageContainer>
         )}
         <input
           id="image-upload"
@@ -106,8 +113,16 @@ const UploadImage = ({ image, setImage }) => {
               onZoomChange={setZoom}
             />
           </div>
-          <div onClick={showCroppedImage} className="controls">
-            crop
+          <div className="controls">
+            <Slider
+              className="zoom"
+              min={10}
+              max={100}
+              onChange={(e, v) => setZoom(v / 10)}
+            />
+            <Button full invisible onClick={showCroppedImage}>
+              Crop
+            </Button>
           </div>
         </ImageManipulator>
       )}
@@ -122,7 +137,21 @@ const UploadContainer = styled.div``
 const UploadImageContainer = styled.div`
   width: 80px;
   height: 80px;
-  background: var(--c-bg);
+  border-radius: 5px;
+  border: 2px solid var(--c-icon-l);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    path {
+      fill: var(--c-icon-l);
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    width: 200px;
+    height: 200px;
+  }
 `
 
 const ImageManipulator = styled.div`
@@ -132,6 +161,7 @@ const ImageManipulator = styled.div`
   top: 0px;
   left: 0px;
   background: var(--c-bg-d);
+  z-index: 97;
 
   .preview {
     height: 60vh;
@@ -139,16 +169,15 @@ const ImageManipulator = styled.div`
     position: relative;
   }
   .controls {
-    background: var(--c-bg);
+    background: var(--c-bg-d);
     height: 40vh;
     color: white;
     z-index: 99;
     position: relative;
+    padding: 20px;
   }
 `
 
 const ImagePreview = styled.img`
-  width: 80px;
-  height: 80px;
   border-radius: 5px;
 `
