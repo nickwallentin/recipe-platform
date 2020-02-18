@@ -1,27 +1,20 @@
 import React, { Fragment, useState, useCallback } from "react"
 import Cropper from "react-easy-crop"
-
-import { getOrientation } from "get-orientation/browser"
-import getCroppedImg from "./cropImage"
-import { getRotatedImage } from "./rotateImage"
+import axios from "axios"
 import styled from "styled-components"
 
-const UploadImage = ({ setImage }) => {
-  const [croppedImage, setCroppedImage] = useState(null)
-  const [imageSrc, setImageSrc] = useState(null)
+const UploadImage = ({ image, setImage }) => {
+  const [imageSrc, setImageSrc] = useState()
+  const [file, setFile] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  const [isCropping, setIsCropping] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels)
-  }, [])
 
-  const ORIENTATION_TO_ANGLE = {
-    "3": 180,
-    "6": 90,
-    "8": -90,
-  }
+    console.log(croppedAreaPixels)
+  }, [])
 
   const chooseImage = event => {
     event.preventDefault()
@@ -39,15 +32,10 @@ const UploadImage = ({ setImage }) => {
 
   const onFileChange = async e => {
     if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0])
       const file = e.target.files[0]
-      let imageDataUrl = await readFile(file)
-
-      // apply rotation if needed
-      const orientation = await getOrientation(file)
-      const rotation = ORIENTATION_TO_ANGLE[orientation]
-      if (rotation) {
-        imageDataUrl = await getRotatedImage(imageDataUrl, rotation)
-      }
+      const imageDataUrl = await readFile(file)
+      console.log(imageDataUrl)
 
       setImageSrc(imageDataUrl)
       setCrop({ x: 0, y: 0 })
@@ -55,27 +43,43 @@ const UploadImage = ({ setImage }) => {
     }
   }
 
-  const showCroppedImage = async () => {
-    try {
-      setIsCropping(true)
-      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels)
-      console.log("done", { croppedImage })
-      setIsCropping(false)
-      setCroppedImage(croppedImage)
-      setImageSrc(null)
-    } catch (e) {
-      console.error(e)
-      setIsCropping(false)
-    }
+  const showCroppedImage = e => {
+    setIsLoading(true)
+    const fd = new FormData()
+    fd.append("upload_preset", "recipe")
+    fd.append("file", file)
+    fd.append(
+      "custom_coordinates",
+      croppedAreaPixels.x +
+        "," +
+        croppedAreaPixels.y +
+        "," +
+        croppedAreaPixels.width +
+        "," +
+        croppedAreaPixels.height
+    )
+
+    axios
+      .post("https://api.cloudinary.com/v1_1/df6zdagxi/image/upload", fd)
+      .then(res => {
+        setImage(res.data.secure_url)
+        console.log(res)
+      })
+      .then(() => {
+        setImageSrc(null)
+        setFile(null)
+        setIsLoading(false)
+      })
+      .catch(err => console.log("error", err))
   }
 
   return (
     <Fragment>
       <UploadContainer>
-        {croppedImage ? (
+        {image ? (
           <ImagePreview
             onClick={e => chooseImage(e)}
-            src={croppedImage}
+            src={image}
             alt="Recipe image preview"
           />
         ) : (
@@ -143,4 +147,8 @@ const ImageManipulator = styled.div`
   }
 `
 
-const ImagePreview = styled.img``
+const ImagePreview = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+`

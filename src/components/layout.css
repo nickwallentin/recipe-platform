@@ -15,6 +15,8 @@ body {
 
   --c-icon-l: #cbcbd1;
   --c-icon-d: #9b9ca3;
+
+  background: var(--c-bg-s);
 }
 body.dark {
   --c-bg: #262626;
@@ -33,6 +35,7 @@ body.dark {
 
   --c-icon-l: #565867;
   --c-icon-d: #8891a3;
+  background: var(--c-bg-s);
 }
 
 html {
@@ -656,4 +659,8 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+
+body {
+  font-family: "Rubik", sans-serif;
 }
