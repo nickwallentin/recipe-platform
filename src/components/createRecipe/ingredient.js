@@ -93,6 +93,9 @@ const Ingredient = ({
               value={input}
               onChange={e => onInputChange(e)}
             ></Input>
+            <div onClick={() => onEdit()} className="actions">
+              <MoreIcon />
+            </div>
           </div>
           <IngredientMenu
             onAdd={onAdd}
@@ -121,7 +124,7 @@ const IngredientContainer = styled.div`
 
   .ingredient-input {
     display: grid;
-    grid-template-columns: 40px 30px 2fr;
+    grid-template-columns: 40px 30px 1fr 24px;
   }
   .ingredient-item {
     display: grid;
