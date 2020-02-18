@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useCallback } from "react"
 import Cropper from "react-easy-crop"
-import Slider from "@material-ui/core/slider"
+
 import axios from "axios"
 import styled from "styled-components"
 
@@ -114,12 +114,6 @@ const UploadImage = ({ image, setImage }) => {
             />
           </div>
           <div className="controls">
-            <Slider
-              className="zoom"
-              min={10}
-              max={100}
-              onChange={(e, v) => setZoom(v / 10)}
-            />
             <Button full invisible onClick={showCroppedImage}>
               Crop
             </Button>
