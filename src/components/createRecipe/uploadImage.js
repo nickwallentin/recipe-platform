@@ -8,7 +8,7 @@ import styled from "styled-components"
 
 const UploadImage = ({ setImage }) => {
   const [croppedImage, setCroppedImage] = useState(null)
-  const [imageSrc, setImageSrc] = useState(imageSrc)
+  const [imageSrc, setImageSrc] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
