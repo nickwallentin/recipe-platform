@@ -1,3 +1,40 @@
+body {
+  /* Colors */
+  --c-bg: #ffffff;
+  --c-bg-s: #f5f4f9;
+  --c-bg-d: #393b49;
+
+  --c-border: #cbcbd1;
+
+  --c-pri: #32d88e;
+  --c-pri-soft: #d3f2e4;
+
+  --c-txt: #393b49;
+  --c-txt-soft: #9b9ca3;
+  --c-txt-inv: #fcfbff;
+
+  --c-icon-l: #cbcbd1;
+  --c-icon-d: #9b9ca3;
+}
+body.dark {
+  --c-bg: #262626;
+  --c-bg-s: #1a1a1a;
+  --c-bg-d: #191919;
+  --c-bg-inv-20: #ffffff20;
+
+  --c-border: #ffffff10;
+
+  --c-pri-soft: #2c4237;
+
+  --c-txt: #d5dade;
+  --c-txt-soft: #8991a3;
+  --c-txt-60: #ffffff60;
+  --c-txt-40: #ffffff40;
+
+  --c-icon-l: #565867;
+  --c-icon-d: #8891a3;
+}
+
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
