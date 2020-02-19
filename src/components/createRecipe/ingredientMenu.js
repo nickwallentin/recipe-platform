@@ -8,28 +8,35 @@ import ClearIcon from "../../assets/icons/clear.svg"
 import EditIcon from "../../assets/icons/edit.svg"
 import DeleteIcon from "../../assets/icons/delete.svg"
 
-const IngredientMenu = ({ isAdding, onCancel, isEditing, onAdd }) => {
+const IngredientMenu = ({
+  index,
+  isAdding,
+  onCancel,
+  isEditing,
+  onAdd,
+  onEdit,
+}) => {
   return (
     <IngredientMenuContainer>
-      {isAdding ? (
+      {isAdding || isEditing ? (
         <Fragment>
           <Button onClick={() => onCancel()} full invisible>
             <ClearIcon /> Cancel
           </Button>
-          <Button onClick={() => onAdd()} full invisible>
-            <CheckIcon /> Add
+          <Button onClick={() => onAdd(index)} full invisible>
+            <CheckIcon /> Done
           </Button>
         </Fragment>
-      ) : isEditing ? (
+      ) : (
         <Fragment>
           <Button full invisible>
             <DeleteIcon /> Remove
           </Button>
-          <Button full invisible>
+          <Button onClick={() => onEdit()} full invisible>
             <EditIcon /> Edit
           </Button>
         </Fragment>
-      ) : null}
+      )}
     </IngredientMenuContainer>
   )
 }

@@ -103,7 +103,7 @@ export const Input = styled.input`
     font-weight: 500;
   }
   &.p {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `
 export const Textarea = styled.textarea`
@@ -113,6 +113,7 @@ export const Textarea = styled.textarea`
   min-width: 100% !important;
   max-width: 100% !important;
   padding: 0px;
+  font-size: 1rem;
 
   &::placeholder {
     color: var(--c-txt-soft);
@@ -126,8 +127,8 @@ export const Textarea = styled.textarea`
     font-weight: 500;
   }
   &.p {
-    font-size: 0.9rem;
-    line-height: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.2rem;
   }
 `
 
@@ -159,6 +160,8 @@ export const Button = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 18px;
+    height: 18px;
     path {
       fill: ${props => (props.cta ? "white" : "var(--c-icon-l)")};
     }

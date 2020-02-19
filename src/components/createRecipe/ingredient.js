@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { Fragment, useState } from "react"
 import styled from "styled-components"
 import convert from "convert-units"
 
@@ -14,6 +14,8 @@ const Ingredient = ({
   setIngredients,
   isAdding,
   setIsAdding,
+  menuOpen,
+  setMenuOpen,
 }) => {
   const [input, setInput] = useState(ingredient.ingredient)
   const [amount, setAmount] = useState(ingredient.amount)
@@ -26,17 +28,30 @@ const Ingredient = ({
     setAmountType("")
     setIsAdding(false)
     setIsEditing(false)
+    setMenuOpen({ open: false, index: null })
   }
 
-  const onAdd = () => {
-    let newArrary = ingredients
-    let newIngredient = {
-      ingredient: input,
-      amount: amount,
-      amountType: amountType,
+  const onAdd = index => {
+    if (isEditing) {
+      let newArray = ingredients
+      newArray[index] = {
+        ingredient: input,
+        amount: amount,
+        amountType: amountType,
+      }
+      setIngredients([...newArray])
+    } else {
+      let newArray = ingredients
+      let newIngredient = {
+        ingredient: input,
+        amount: amount,
+        amountType: amountType,
+      }
+      newArray.push(newIngredient)
+      setIngredients([...newArray])
     }
-    newArrary.push(newIngredient)
-    setIngredients([...newArrary])
+
+    reset()
   }
 
   const onUpdate = index => {
@@ -64,7 +79,10 @@ const Ingredient = ({
   }
   const onEdit = () => {
     setIsEditing(true)
+    setIsAdding(false)
   }
+
+  console.log(menuOpen)
 
   return (
     <IngredientContainer>
@@ -93,34 +111,61 @@ const Ingredient = ({
               value={input}
               onChange={e => onInputChange(e)}
             ></Input>
-            <div onClick={() => onEdit()} className="actions">
-              <MoreIcon />
-            </div>
+            {!isAdding && (
+              <div onClick={() => onEdit()} className="actions">
+                <MoreIcon />
+              </div>
+            )}
           </div>
-          <IngredientMenu
-            onAdd={onAdd}
-            onUpdate={onUpdate}
-            isAdding={isAdding}
-            onCancel={onCancel}
-            isEditing={isEditing}
-          />
         </div>
       ) : (
         <div className="ingredient-item">
           <div className="amount">{ingredient.amount}</div>
           <div className="amount-type">{ingredient.amountType}</div>
           <div className="ingredient">{ingredient.ingredient}</div>
-          <div onClick={() => onEdit()} className="actions">
+
+          <div
+            onClick={() => {
+              setMenuOpen({ open: !menuOpen.open, index: index })
+              setIsAdding(false)
+            }}
+            className="actions"
+          >
             <MoreIcon />
           </div>
         </div>
       )}
+      {menuOpen.open && menuOpen.index === index ? (
+        <IngredientMenu
+          onAdd={onAdd}
+          onUpdate={onUpdate}
+          isAdding={isAdding}
+          onCancel={onCancel}
+          isEditing={isEditing}
+          onEdit={onEdit}
+          index={index}
+        />
+      ) : isAdding && menuOpen.index === null ? (
+        <IngredientMenu
+          onAdd={onAdd}
+          onUpdate={onUpdate}
+          isAdding={isAdding}
+          onCancel={onCancel}
+          isEditing={isEditing}
+        />
+      ) : null}
     </IngredientContainer>
   )
 }
 
 const IngredientContainer = styled.div`
-  padding: 15px 20px;
+  padding: 10px 20px;
+  &:first-of-type {
+    padding-top: 20px;
+  }
+  &:last-of-type {
+    padding-bottom: 20px;
+  }
 
   .ingredient-input {
     display: grid;
@@ -129,6 +174,10 @@ const IngredientContainer = styled.div`
   .ingredient-item {
     display: grid;
     grid-template-columns: 40px 30px 1fr 24px;
+    & > div {
+      display: flex;
+      align-items: center;
+    }
     .amount,
     .amount-type {
       color: var(--c-pri);
