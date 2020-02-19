@@ -61,7 +61,7 @@ const Ingredient = ({
     setAmount(e.target.value)
   }
   const onAmountTypeChange = e => {
-    setAmountType(e.target.value)
+    setAmountType(e.target.value.toLowerCase())
   }
   const onInputChange = e => {
     setInput(e.target.value)

@@ -42,7 +42,7 @@ const CreateRecipe = () => {
         </Wrap>
       </Sec>
       <Sec>
-        <Wrap>
+        <Wrap full>
           <Grid cols="1fr 1fr">
             <RecipeIngredients
               ingredients={ingredients}
