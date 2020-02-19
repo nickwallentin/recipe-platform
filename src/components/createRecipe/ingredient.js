@@ -85,7 +85,15 @@ const Ingredient = ({
   }
 
   return (
-    <IngredientContainer className={isAdding ? "is-adding" : null}>
+    <IngredientContainer
+      className={
+        isAdding && ingredients.length === 0
+          ? "is-adding no-items"
+          : isAdding
+          ? "is-adding"
+          : null
+      }
+    >
       {isAdding || (isEditing && menuOpen.index === index) ? (
         <div className="ingredient-wrapper">
           <div className="ingredient-input">
@@ -163,6 +171,7 @@ const Ingredient = ({
 const IngredientContainer = styled.div`
   padding: 15px 20px;
   border-top: 1px solid var(--c-bg-s);
+
   &:first-of-type {
     border: none;
   }
@@ -172,7 +181,9 @@ const IngredientContainer = styled.div`
   &.is-adding {
     border-top: 1px solid var(--c-bg-s);
     padding: 20px 20px;
-    margin-top: 10px;
+  }
+  &.no-items {
+    border-top: none;
   }
 
   .ingredient-input {
