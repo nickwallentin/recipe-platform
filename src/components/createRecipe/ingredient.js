@@ -14,13 +14,14 @@ const Ingredient = ({
   setIngredients,
   isAdding,
   setIsAdding,
+  isEditing,
+  setIsEditing,
   menuOpen,
   setMenuOpen,
 }) => {
   const [input, setInput] = useState(ingredient.ingredient)
   const [amount, setAmount] = useState(ingredient.amount)
   const [amountType, setAmountType] = useState(ingredient.amountType)
-  const [isEditing, setIsEditing] = useState(false)
 
   const reset = () => {
     setInput("")
@@ -32,37 +33,28 @@ const Ingredient = ({
   }
 
   const onAdd = index => {
-    if (isEditing) {
-      let newArray = ingredients
-      newArray[index] = {
-        ingredient: input,
-        amount: amount,
-        amountType: amountType,
+    if (input) {
+      if (isEditing) {
+        let newArray = ingredients
+        newArray[index] = {
+          ingredient: input,
+          amount: amount,
+          amountType: amountType,
+        }
+        setIngredients([...newArray])
+      } else {
+        let newArray = ingredients
+        let newIngredient = {
+          ingredient: input,
+          amount: amount,
+          amountType: amountType,
+        }
+        newArray.push(newIngredient)
+        setIngredients([...newArray])
       }
-      setIngredients([...newArray])
-    } else {
-      let newArray = ingredients
-      let newIngredient = {
-        ingredient: input,
-        amount: amount,
-        amountType: amountType,
-      }
-      newArray.push(newIngredient)
-      setIngredients([...newArray])
-    }
 
-    reset()
-  }
-
-  const onUpdate = index => {
-    let newArray = ingredients
-    newArray[index] = {
-      ingredient: input,
-      amount: amount,
-      amountType: amountType,
+      reset()
     }
-    setIngredients([...newArray])
-    reset()
   }
 
   const onAmountChange = e => {
@@ -78,15 +70,23 @@ const Ingredient = ({
     reset()
   }
   const onEdit = () => {
+    setInput(ingredient.ingredient)
+    setAmount(ingredient.amount)
+    setAmountType(ingredient.amountType)
     setIsEditing(true)
     setIsAdding(false)
   }
 
-  console.log(menuOpen)
+  const onRemove = index => {
+    let newArray = ingredients
+    newArray.splice(index, 1)
+    setIngredients([...newArray])
+    reset()
+  }
 
   return (
     <IngredientContainer>
-      {isAdding || isEditing ? (
+      {isAdding || (isEditing && menuOpen.index === index) ? (
         <div className="ingredient-wrapper">
           <div className="ingredient-input">
             <Input
@@ -120,8 +120,11 @@ const Ingredient = ({
         </div>
       ) : (
         <div className="ingredient-item">
-          <div className="amount">{ingredient.amount}</div>
-          <div className="amount-type">{ingredient.amountType}</div>
+          <div className="amount">
+            {ingredient.amount}
+            <div className="amount-type">{ingredient.amountType}</div>
+          </div>
+
           <div className="ingredient">{ingredient.ingredient}</div>
 
           <div
@@ -138,17 +141,16 @@ const Ingredient = ({
       {menuOpen.open && menuOpen.index === index ? (
         <IngredientMenu
           onAdd={onAdd}
-          onUpdate={onUpdate}
           isAdding={isAdding}
           onCancel={onCancel}
           isEditing={isEditing}
           onEdit={onEdit}
           index={index}
+          onRemove={onRemove}
         />
       ) : isAdding && menuOpen.index === null ? (
         <IngredientMenu
           onAdd={onAdd}
-          onUpdate={onUpdate}
           isAdding={isAdding}
           onCancel={onCancel}
           isEditing={isEditing}
@@ -169,11 +171,11 @@ const IngredientContainer = styled.div`
 
   .ingredient-input {
     display: grid;
-    grid-template-columns: 40px 30px 1fr 24px;
+    grid-template-columns: 35px 30px 1fr 24px;
   }
   .ingredient-item {
     display: grid;
-    grid-template-columns: 40px 30px 1fr 24px;
+    grid-template-columns: 65px 1fr 24px;
     & > div {
       display: flex;
       align-items: center;
@@ -182,11 +184,14 @@ const IngredientContainer = styled.div`
     .amount-type {
       color: var(--c-pri);
     }
-    .actions {
-      svg {
-        path {
-          fill: var(--c-icon-l);
-        }
+    .amount-type {
+      margin-left: 5px;
+    }
+  }
+  .actions {
+    svg {
+      path {
+        fill: var(--c-icon-l);
       }
     }
   }

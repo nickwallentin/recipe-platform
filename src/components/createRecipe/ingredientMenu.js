@@ -15,6 +15,7 @@ const IngredientMenu = ({
   isEditing,
   onAdd,
   onEdit,
+  onRemove,
 }) => {
   return (
     <IngredientMenuContainer>
@@ -29,7 +30,7 @@ const IngredientMenu = ({
         </Fragment>
       ) : (
         <Fragment>
-          <Button full invisible>
+          <Button onClick={() => onRemove(index)} full invisible>
             <DeleteIcon /> Remove
           </Button>
           <Button onClick={() => onEdit()} full invisible>

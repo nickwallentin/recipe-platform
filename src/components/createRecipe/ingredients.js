@@ -8,12 +8,14 @@ import AddIcon from "../../assets/icons/add-outline.svg"
 
 const RecipeIngredients = ({ ingredients, setIngredients }) => {
   const [isAdding, setIsAdding] = useState(false)
-  const [editIndex, setEditIndex] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
+
   const [menuOpen, setMenuOpen] = useState({ open: false, index: null })
 
   const onStartAddIngredient = () => {
     setMenuOpen({ open: false, index: null })
     setIsAdding(!isAdding)
+    setIsEditing(false)
   }
 
   return (
@@ -33,10 +35,11 @@ const RecipeIngredients = ({ ingredients, setIngredients }) => {
             <Ingredient
               ingredient={ingredient}
               index={index}
-              editIndex={editIndex}
               ingredients={ingredients}
               setIngredients={setIngredients}
               setIsAdding={setIsAdding}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
               menuOpen={menuOpen}
               setMenuOpen={setMenuOpen}
               key={JSON.stringify(ingredient)}
@@ -49,6 +52,8 @@ const RecipeIngredients = ({ ingredients, setIngredients }) => {
               ingredients={ingredients}
               setIngredients={setIngredients}
               isAdding={isAdding}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
               menuOpen={menuOpen}
               setMenuOpen={setMenuOpen}
               setIsAdding={setIsAdding}
