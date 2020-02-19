@@ -25,7 +25,7 @@ const MetaInfo = ({ servings, setServings, cookingTime, setCookingTime }) => {
         </div>
         <div>
           {cookingTime} min
-          <small>cooking time</small>
+          <small>time</small>
         </div>
         <div onClick={() => setCookingTime(prevState => prevState + 5)}>
           <AddIcon />
@@ -39,7 +39,6 @@ const MetaContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
-  margin: 0px 0px 20px 0px;
 `
 const Control = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import Ingredient from "./ingredient"
 import { Card, Button } from "../styled"
 import AddIcon from "../../assets/icons/add-outline.svg"
 
-const RecipeIngredients = ({ ingredients, setIngredients }) => {
+const Ingredients = ({ ingredients, setIngredients }) => {
   const [isAdding, setIsAdding] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
@@ -19,7 +19,7 @@ const RecipeIngredients = ({ ingredients, setIngredients }) => {
   }
 
   return (
-    <Card cSpace="0px" fSpace="0px" flexHeader>
+    <Card cSpace="0px" fSpace="5px" flexHeader>
       <div className="card-header">
         <h4>Ingredients</h4>
         <small>
@@ -72,4 +72,4 @@ const RecipeIngredients = ({ ingredients, setIngredients }) => {
 
 const IngredientList = styled.div``
 
-export default RecipeIngredients
+export default Ingredients

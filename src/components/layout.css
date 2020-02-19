@@ -4,7 +4,7 @@ body {
   --c-bg-s: #f5f4f9;
   --c-bg-d: #393b49;
 
-  --c-border: #cbcbd1;
+  --c-border: #d3d3d8;
 
   --c-pri: #32d88e;
   --c-pri-soft: #d3f2e4;
@@ -654,11 +654,6 @@ pre code:after,
 pre tt:before,
 pre tt:after {
   content: "";
-}
-@media only screen and (max-width: 480px) {
-  html {
-    font-size: 100%;
-  }
 }
 
 body {

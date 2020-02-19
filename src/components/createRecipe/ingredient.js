@@ -85,7 +85,7 @@ const Ingredient = ({
   }
 
   return (
-    <IngredientContainer>
+    <IngredientContainer className={isAdding ? "is-adding" : null}>
       {isAdding || (isEditing && menuOpen.index === index) ? (
         <div className="ingredient-wrapper">
           <div className="ingredient-input">
@@ -161,12 +161,18 @@ const Ingredient = ({
 }
 
 const IngredientContainer = styled.div`
-  padding: 10px 20px;
+  padding: 15px 20px;
+  border-top: 1px solid var(--c-bg-s);
   &:first-of-type {
-    padding-top: 20px;
+    border: none;
   }
   &:last-of-type {
-    padding-bottom: 20px;
+  }
+
+  &.is-adding {
+    border-top: 1px solid var(--c-bg-s);
+    padding: 20px 20px;
+    margin-top: 10px;
   }
 
   .ingredient-input {

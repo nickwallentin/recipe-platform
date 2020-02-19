@@ -6,7 +6,8 @@ import { Sec, Wrap, Grid } from "../../components/styled"
 import UploadImage from "../../components/createRecipe/uploadImage"
 import RecipeInfo from "../../components/createRecipe/recipeInfo"
 import MetaInfo from "../../components/createRecipe/metaInfo"
-import RecipeIngredients from "../../components/createRecipe/ingredients"
+import Ingredients from "../../components/createRecipe/ingredients"
+import Steps from "../../components/createRecipe/steps"
 
 const CreateRecipe = () => {
   const [image, setImage] = useState(null)
@@ -15,9 +16,10 @@ const CreateRecipe = () => {
   const [servings, setServings] = useState(2)
   const [cookingTime, setCookingTime] = useState(15)
   const [ingredients, setIngredients] = useState([])
+  const [steps, setSteps] = useState([])
 
   return (
-    <Layout>
+    <Layout page="Create recipe">
       <Sec>
         <Wrap style={{ maxWidth: "500px" }}>
           <Grid cols="200px 1fr" mCols="80px 1fr">
@@ -44,10 +46,17 @@ const CreateRecipe = () => {
       <Sec>
         <Wrap full>
           <Grid cols="1fr 1fr">
-            <RecipeIngredients
+            <Ingredients
               ingredients={ingredients}
               setIngredients={setIngredients}
             />
+          </Grid>
+        </Wrap>
+      </Sec>
+      <Sec>
+        <Wrap full>
+          <Grid cols="1fr 1fr">
+            <Steps steps={steps} setSteps={setSteps} />
           </Grid>
         </Wrap>
       </Sec>

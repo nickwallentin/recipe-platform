@@ -47,7 +47,7 @@ const IngredientMenuContainer = styled.div`
   background: var(--c-bg-d);
   padding: 0px;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 `

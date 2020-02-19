@@ -126,10 +126,6 @@ export const Textarea = styled.textarea`
     font-size: 1.2rem;
     font-weight: 500;
   }
-  &.p {
-    font-size: 1rem;
-    line-height: 1.2rem;
-  }
 `
 
 export const Button = styled.button`
@@ -160,8 +156,8 @@ export const Button = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     path {
       fill: ${props => (props.cta ? "white" : "var(--c-icon-l)")};
     }
