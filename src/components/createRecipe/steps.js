@@ -9,7 +9,10 @@ const Steps = ({ steps, setSteps }) => {
   const [isAdding, setIsAdding] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
+  const [menuOpen, setMenuOpen] = useState({ open: false, index: null })
+
   const onStartAdding = () => {
+    setMenuOpen({ open: false, index: null })
     setIsAdding(!isAdding)
   }
 
@@ -25,7 +28,6 @@ const Steps = ({ steps, setSteps }) => {
       <div className="card-content">
         {steps.map((step, index) => (
           <Step
-            isAdding={isAdding}
             setIsAdding={setIsAdding}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
@@ -33,6 +35,8 @@ const Steps = ({ steps, setSteps }) => {
             steps={steps}
             setSteps={setSteps}
             index={index}
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
           />
         ))}
         {isAdding && (
@@ -43,7 +47,9 @@ const Steps = ({ steps, setSteps }) => {
             setIsEditing={setIsEditing}
             steps={steps}
             setSteps={setSteps}
-            index={-1}
+            index={null}
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
           />
         )}
       </div>
