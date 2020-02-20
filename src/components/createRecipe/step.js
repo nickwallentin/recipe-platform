@@ -49,9 +49,9 @@ const Step = ({
   }
   const onEdit = () => {
     reset()
+    setMenuOpen({ open: true, index: index })
     setInput(step)
     setIsEditing(true)
-    setIsAdding(false)
   }
   const onRemove = index => {
     let array = steps
